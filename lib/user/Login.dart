@@ -65,7 +65,7 @@ class _Login extends State<Login> {
                         if(LoginTry()){
                           Navigator.push(context, MaterialPageRoute(builder: (context) => MyApp()))
                         }else{
-                          Snackbar()
+
                         },
                       },
                       child: Container(
