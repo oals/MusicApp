@@ -20,7 +20,7 @@ class _MyPageViewState extends State<MyAppPageView> {
       physics: AlwaysScrollableScrollPhysics(),
       children: [
         Container(
-          color: Colors.red,
+          color: Colors.white,
           child: Image.asset('assets/flutterLogo.png',fit: BoxFit.contain,)
         ),
         Container(
