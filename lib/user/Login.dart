@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/comnWidget/Appbar.dart';
 import 'package:flutterapp/main.dart';
-import 'package:flutterapp/comnWidget/SnackBar.dart';
+import 'package:flutterapp/comnWidget/CustomSnackBar.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -65,7 +65,8 @@ class _Login extends State<Login> {
                         if(LoginTry()){
                           Navigator.push(context, MaterialPageRoute(builder: (context) => MyApp()))
                         }else{
-
+                          print('로그인 실패'),
+                          CustomSnackBar.show(context, '계정 정보를 찾을 수 없습니다..')
                         },
                       },
                       child: Container(
