@@ -13,8 +13,8 @@ class Login extends StatefulWidget {
 class _Login extends State<Login> {
 
   bool LoginTry() {
-    if(false){
-
+    if(true){
+      //db 연결
       return true;
     }else{
 

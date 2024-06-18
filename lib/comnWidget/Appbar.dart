@@ -29,9 +29,11 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
 
     return AppBar(
-      title: Text(menuNM),
+      backgroundColor: Colors.black87,
+      title: Text(menuNM, style: TextStyle(color: Colors.white,fontFamily: 'Roboto',fontSize: 16),),
       centerTitle: true,
       leading: IconButton(
+        color: Colors.white,
         icon: Icon(Icons.menu),
         onPressed: () {
           openDrawerCallback(); // Drawer 열기 콜백 호출
@@ -39,7 +41,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: <Widget>[
         IconButton(
-          icon: Icon(Icons.search),
+          color: Colors.white,
+          icon: Icon(Icons.settings),
           onPressed: () {
             // Implement search functionality
           },
