@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 
-
 class SearchMusic extends StatefulWidget {
-  const SearchMusic({super.key});
+  const SearchMusic({Key? key}) : super(key: key);
 
   @override
   State<SearchMusic> createState() => _SearchMusicState();
 }
 
 class _SearchMusicState extends State<SearchMusic> {
-
   late FocusNode _focusNode;
   late TextEditingController _controller;
 
@@ -34,15 +32,22 @@ class _SearchMusicState extends State<SearchMusic> {
   void onSearchTap() {
     if (_focusNode.hasFocus) {
       print('키보드닫기');
-      _focusNode.unfocus(); //키보드 닫기
+      _focusNode.unfocus(); // 키보드 닫기
     } else {
       print('키보드열기');
       _focusNode.requestFocus(); // 키보드 열기
     }
   }
 
+  void likeMusic(likeChk){
+    if(likeChk == 0){
+
+    }else{
+
+    }
+  }
+
   void onSearchButtonPressed() {
-    print('123123');
     _focusNode.unfocus(); // 키보드 닫기
     handleSubmitted(_controller.text); // 검색어 처리 함수 호출
     _controller.clear(); // 입력 필드 비우기
@@ -50,59 +55,110 @@ class _SearchMusicState extends State<SearchMusic> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      color: Colors.black87,
-      child: Container(
-        margin: EdgeInsets.all(10),
-        child: Column(
-          children: [
-            Material(
-              elevation: 10, // 그림자의 깊이
-              shadowColor: Colors.grey[400], // 그림자 색상
-              borderRadius: BorderRadius.circular(20), // 테두리의 모서리를 둥글게 만듦
-              child: Container(
-                width: double.infinity,
-                padding: EdgeInsets.symmetric(horizontal: 16.0), // 좌우 여백 설정
-                decoration: BoxDecoration(
-                  color: Colors.white, // 배경색 설정
-                  borderRadius: BorderRadius.circular(20), // 테두리의 모서리를 둥글게 만듦
-                ),
-                child: TextField(
-                  controller: _controller,
-                  decoration: InputDecoration(
-                    hintText: 'Search',
-                    border: InputBorder.none, // 텍스트 필드의 테두리 없음
-                    prefixIcon: Icon(Icons.search, color: Colors.grey),
-                    contentPadding: EdgeInsets.symmetric(vertical: 15.0), // 내부 여백 설정
+    return Scaffold(
+
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        color: Colors.black87,
+        child: Container(
+          margin: EdgeInsets.all(10),
+          child: Column(
+            children: [
+              Material(
+                elevation: 10,
+                shadowColor: Colors.grey[400],
+                borderRadius: BorderRadius.circular(20),
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
                   ),
-                  onTap: onSearchTap,
-                  onSubmitted: handleSubmitted, // 엔터 키 입력 시 처리
+                  child: TextField(
+                    controller: _controller,
+                    decoration: InputDecoration(
+                      hintText: 'Search',
+                      border: InputBorder.none,
+                      prefixIcon: Icon(Icons.search, color: Colors.grey),
+                      contentPadding: EdgeInsets.symmetric(vertical: 15.0),
+                    ),
+                    onTap: onSearchTap,
+                    onSubmitted: handleSubmitted,
+                  ),
                 ),
               ),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 15),
-              child: SingleChildScrollView(
+              SingleChildScrollView(
                 physics: AlwaysScrollableScrollPhysics(),
                 child: Column(
                   children: [
-                    Text('1',style: TextStyle(color: Colors.white),),
-                    Text('1',style: TextStyle(color: Colors.white),),
-                    Text('1',style: TextStyle(color: Colors.white),),
-                    Text('1',style: TextStyle(color: Colors.white),),
-                    Text('1',style: TextStyle(color: Colors.white),),
-                    Text('1',style: TextStyle(color: Colors.white),),
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 100,
+                      margin: EdgeInsets.all(0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.3,
+                            height: 80,
+                            color: Colors.black12,
+                            padding: EdgeInsets.all(2),
+                            child: Image.asset(
+                              'assets/flutterLogo.png',
+                              width: MediaQuery.of(context).size.width * 0.2,
+                              height: 80,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          SizedBox(width: 12),
+                          Expanded(
+                            child: Container(
+                              height: 80,
+                              color: Colors.black12,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    '공공구 - 회색도시',
+                                    style: TextStyle(fontSize: 14, color: Colors.white),
+                                  ),
+                                  Text(
+                                    'Admin',
+                                    style: TextStyle(fontSize: 10, color: Colors.white),
+                                  ),
+                                  Text(
+                                    '4:19',
+                                    style: TextStyle(fontSize: 10, color: Colors.white),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: 50,
+                            height: 80,
+                            color: Colors.black26,
+                            child: IconButton(
+                              onPressed: () => {
+                                likeMusic(1),
+                              },
+                              icon: Icon(Icons.favorite_border, color: Colors.white),
+                            )
+
+                          ),
+                        ],
+                      ),
+                    ),
+
                   ],
                 ),
-              )
-            )
-
-          ],
+              ),
+            ],
+          ),
         ),
-      )
-
+      ),
     );
-
   }
 }

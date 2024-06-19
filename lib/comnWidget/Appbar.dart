@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutterapp/main.dart';
 import 'package:flutterapp/setting/setting.dart';
 import 'package:flutterapp/user/Login.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:flutterapp/comnWidget/Upload.dart';
+
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
@@ -11,19 +14,57 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   void navigateTo(BuildContext context, String menuNm) {
     if (menuNm == '홈') {
-      Navigator.pop(context); // Drawer 닫기
+      Navigator.pop(context);
       Navigator.push(context, MaterialPageRoute(builder: (context) => MyApp()));
     } else if (menuNm == '로그인') {
-      Navigator.pop(context); // Drawer 닫기
+      Navigator.pop(context);
       Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
     } else if (menuNm == '회원가입') {
-      Navigator.pop(context); // Drawer 닫기
+      Navigator.pop(context);
       Navigator.push(context, MaterialPageRoute(builder: (context) => MyApp()));
     } else if (menuNm == '설정') {
-      Navigator.pop(context); // Drawer 닫기
+      Navigator.pop(context);
       Navigator.push(context, MaterialPageRoute(builder: (context) => Setting()));
+    } else if (menuNm == '업로드') {
+      showModalBottomSheet(
+        context: context,
+        builder: (context) => Upload(),
+        isScrollControlled: true,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
+        ),
+      );
+    }
+
+  }
+
+  void _openFileExplorer(BuildContext context) async {
+    try {
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['mp3', 'wav', 'flac'], // 업로드 가능한 형식자들
+      );
+      if (result != null) {
+        String? filePath = result.files.single.path;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Selected file: $filePath')),
+        );
+        // 파일 업로드 서버 보낼때여기
+      } else {
+        // 업로드 취소 했을 때
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('파일 선택이 취소되었습니다.')),
+        );
+      }
+    } catch (e) {
+      print('File picking error: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('잠시 후 다시 시도해주세요.')),
+      );
     }
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -42,9 +83,11 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: <Widget>[
         IconButton(
           color: Colors.white,
-          icon: Icon(Icons.settings),
+          icon: Icon(Icons.upload),
           onPressed: () {
-            // Implement search functionality
+            print('파일 업로드');
+            navigateTo(context, '업로드');
+
           },
         ),
       ],
@@ -60,9 +103,9 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         padding: EdgeInsets.zero,
         children: <Widget>[
           DrawerHeader(
-            child: Text('메뉴'),
+            child: Text('메뉴',style: TextStyle(color: Colors.white),),
             decoration: BoxDecoration(
-              color: Colors.blue,
+              color: Colors.black87,
             ),
           ),
           ListTile(
