@@ -10,6 +10,34 @@ class _UploadState extends State<Upload> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<Offset> _offsetAnimation;
 
+  List<String> checkBoxList = [
+    '항목1',
+    '항목2',
+    '항목3',
+    '항목4',
+    '항목2',
+    '항목2',
+    '124',
+    '152',
+    '항목22',
+    '항목25',
+    '항목2643',
+    '항목23',
+    '항목234',
+    '항목2',
+    '항목2',
+    '항목2',
+    '항목2',
+    '항목2',
+    '항목2',
+    '항목2',
+    '항목2',
+    '항목2',
+    '항목2',
+  ];
+
+  Map<String, bool> buttonStates = {}; // Map to track button states
+
   @override
   void initState() {
     super.initState();
@@ -22,16 +50,26 @@ class _UploadState extends State<Upload> with SingleTickerProviderStateMixin {
       end: Offset(0.0, 0),
     ).animate(CurvedAnimation(
       parent: _controller,
-        curve: Curves.easeInOut,
+      curve: Curves.easeInOut,
     ));
 
     _controller.forward();
+
+    checkBoxList.forEach((item) {
+      buttonStates[item] = false; // Initialize each item with false
+    });
   }
 
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+
+  void _toggleButtonState(String item) {
+    setState(() {
+      buttonStates[item] = !buttonStates[item]!; // Toggle button state
+    });
   }
 
   void _openFileExplorer(BuildContext context) async {
@@ -45,7 +83,7 @@ class _UploadState extends State<Upload> with SingleTickerProviderStateMixin {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Selected file: $filePath')),
         );
-        // 파일 업로드 서버 보낼때여기
+        // 파일 업로드 서버 보낼때 여기
       } else {
         // 업로드 취소 했을 때
         ScaffoldMessenger.of(context).showSnackBar(
@@ -60,43 +98,167 @@ class _UploadState extends State<Upload> with SingleTickerProviderStateMixin {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
-    return SlideTransition(
-      position: _offsetAnimation,
-      child: Container(
-        width: MediaQuery.of(context).size.width,   //부모 창의 넓이 가져와야 함
-        height: MediaQuery.of(context).size.height * 0.93,
-        decoration: BoxDecoration(
-          color: Colors.black,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              margin: EdgeInsets.all(10),
-              child: Column(
-                children: [
-                  Container(
-                    child: IconButton(
-                      onPressed: () => {
-                        _openFileExplorer(context)  // 이미지랑 음악 함수에서 구분해야됨
-                      },
-                      icon : Icon(Icons.image,color: Colors.white, size: 300,),
-                    )
+    return Scaffold(
+      backgroundColor: Colors.black87,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: IconButton(
+                        onPressed: () {
+                          _openFileExplorer(context);
+                        },
+                        icon: Icon(Icons.image, color: Colors.white, size: 200),
+                      ),
+                    ),
+                    SizedBox(width: 20),
+                    Expanded(
+                      flex: 2,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          TextField(
+                            decoration: InputDecoration(
+                              labelText: "Title.",
+                              labelStyle: TextStyle(color: Colors.white, fontSize: 12),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                            ),
+                            style: TextStyle(color: Colors.white),
+                            onChanged: (value) {
+                              print(value);
+                            },
+                          ),
+                          SizedBox(height: 10),
+                          TextField(
+                            decoration: InputDecoration(
+                              labelText: "asd.",
+                              labelStyle: TextStyle(color: Colors.white, fontSize: 12),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                            ),
+                            style: TextStyle(color: Colors.white),
+                            onChanged: (value) {
+                              print(value);
+                            },
+                          ),
+                          SizedBox(height: 10),
+                          TextField(
+                            decoration: InputDecoration(
+                              labelText: "asd.",
+                              labelStyle: TextStyle(color: Colors.white, fontSize: 12),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                            ),
+                            style: TextStyle(color: Colors.white),
+                            onChanged: (value) {
+                              print(value);
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                TextField(
+                  maxLines: 5,
+                  decoration: InputDecoration(
+                    labelText: 'info',
+                    labelStyle: TextStyle(color: Colors.white, fontSize: 12),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
                   ),
-                  Container(),
-                  Container(),
-                ],
-              )
-
-
-
-            )
-          ],
+                  style: TextStyle(color: Colors.white),
+                ),
+                SizedBox(height: 20),
+                Container(
+                  height: 110,
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 1, color: Colors.white),
+                  ),
+                  child: Wrap(
+                      direction: Axis.horizontal, // 나열 방향
+                      alignment: WrapAlignment.start, // 정렬 방식
+                      spacing: 2, // 좌우 간격
+                      runSpacing: 2, // 상하 간격
+                      children: checkBoxList.map((item) => Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(width: 1, color: Colors.white),
+                            borderRadius: BorderRadius.circular(15),
+                            color: buttonStates[item]! ? Colors.white24 : Colors.transparent,
+                          ),
+                          child: TextButton(
+                            onPressed: () {
+                              _toggleButtonState(item);
+                            },
+                            child: Text(item, style: TextStyle(color: Colors.white)),
+                          ),
+                        ),
+                      )).toList(),
+                  ),
+                ),
+                SizedBox(height: 20),
+                Container(
+                  height: 50,
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 1, color: Colors.white),
+                  ),
+                  child: Center(
+                    child: Text('audio', style: TextStyle(color: Colors.white)),
+                  ),
+                ),
+                SizedBox(height: 20),
+                Container(
+                  height: 50,
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 1, color: Colors.white),
+                  ),
+                  child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.upload,
+                            color: Colors.white,
+                          ),
+                          iconSize: 38,
+                          splashRadius: 24,
+                        ),
+                        SizedBox(width: 10),
+                        Text(
+                          'Upload',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
