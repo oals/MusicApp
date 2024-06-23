@@ -3,6 +3,7 @@ import 'package:flutterapp/main.dart';
 import 'package:flutterapp/setting/setting.dart';
 import 'package:flutterapp/user/Login.dart';
 import 'package:flutterapp/comnWidget/Upload.dart';
+import 'package:flutterapp/music/MusicPlay.dart';
 
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -14,7 +15,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   void navigateTo(BuildContext context, String menuNm) {
     if (menuNm == '홈') {
       Navigator.pop(context);
-      Navigator.push(context, MaterialPageRoute(builder: (context) => MyApp()));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => MusicPlay()));
     } else if (menuNm == '로그인') {
       Navigator.pop(context);
       Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 
@@ -9,45 +11,25 @@ class Upload extends StatefulWidget {
 class _UploadState extends State<Upload> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<Offset> _offsetAnimation;
+  ImageProvider<Object>? _selectedImageFile;
 
   List<String> checkBoxList = [
-    '항목1',
-    '항목2',
-    '항목3',
-    '항목4',
-    '항목2',
-    '항목2',
-    '124',
-    '152',
-    '항목22',
-    '항목25',
-    '항목2643',
-    '항목23',
-    '항목234',
-    '항목2',
-    '항목2',
-    '항목2',
-    '항목2',
-    '항목2',
-    '항목2',
-    '항목2',
-    '항목2',
-    '항목2',
-    '항목2',
+    '힙합', '알앤비', '발라드', '락'
   ];
 
-  Map<String, bool> buttonStates = {}; // Map to track button states
+  Map<String, bool> buttonStates = {};
 
   @override
   void initState() {
     super.initState();
+    _selectedImageFile = AssetImage('assets/flutterLogo.png');
     _controller = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 500),
     );
     _offsetAnimation = Tween<Offset>(
       begin: Offset(0.0, 1.0),
-      end: Offset(0.0, 0),
+      end: Offset(0.0, 0.0),
     ).animate(CurvedAnimation(
       parent: _controller,
       curve: Curves.easeInOut,
@@ -56,7 +38,7 @@ class _UploadState extends State<Upload> with SingleTickerProviderStateMixin {
     _controller.forward();
 
     checkBoxList.forEach((item) {
-      buttonStates[item] = false; // Initialize each item with false
+      buttonStates[item] = false;
     });
   }
 
@@ -68,7 +50,7 @@ class _UploadState extends State<Upload> with SingleTickerProviderStateMixin {
 
   void _toggleButtonState(String item) {
     setState(() {
-      buttonStates[item] = !buttonStates[item]!; // Toggle button state
+      buttonStates[item] = !buttonStates[item]!;
     });
   }
 
@@ -80,18 +62,21 @@ class _UploadState extends State<Upload> with SingleTickerProviderStateMixin {
       );
       if (result != null) {
         String? filePath = result.files.single.path;
+        setState(() {
+          _selectedImageFile = FileImage(File(filePath!));
+        });
+
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Selected file: $filePath')),
         );
         // 파일 업로드 서버 보낼때 여기
       } else {
-        // 업로드 취소 했을 때
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('파일 선택이 취소되었습니다.')),
         );
       }
     } catch (e) {
-      print('File picking error: $e');
+      print(e);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('잠시 후 다시 시도해주세요.')),
       );
@@ -114,11 +99,26 @@ class _UploadState extends State<Upload> with SingleTickerProviderStateMixin {
                   children: [
                     Expanded(
                       flex: 1,
-                      child: IconButton(
+                      child: ElevatedButton(
                         onPressed: () {
                           _openFileExplorer(context);
                         },
-                        icon: Icon(Icons.image, color: Colors.white, size: 200),
+                        style: ElevatedButton.styleFrom(
+                          // backgroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(0), // 버튼 모서리를 사각형 모양으로 만듦
+                          ),
+                        ),
+                        child: Container(
+                          width: 120,
+                          height: 160,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: _selectedImageFile!,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                     SizedBox(width: 20),
@@ -129,7 +129,7 @@ class _UploadState extends State<Upload> with SingleTickerProviderStateMixin {
                         children: [
                           TextField(
                             decoration: InputDecoration(
-                              labelText: "Title.",
+                              labelText: "Title",
                               labelStyle: TextStyle(color: Colors.white, fontSize: 12),
                               border: OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.white),
@@ -143,7 +143,7 @@ class _UploadState extends State<Upload> with SingleTickerProviderStateMixin {
                           SizedBox(height: 10),
                           TextField(
                             decoration: InputDecoration(
-                              labelText: "asd.",
+                              labelText: "asd",
                               labelStyle: TextStyle(color: Colors.white, fontSize: 12),
                               border: OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.white),
@@ -157,7 +157,7 @@ class _UploadState extends State<Upload> with SingleTickerProviderStateMixin {
                           SizedBox(height: 10),
                           TextField(
                             decoration: InputDecoration(
-                              labelText: "asd.",
+                              labelText: "admin",
                               labelStyle: TextStyle(color: Colors.white, fontSize: 12),
                               border: OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.white),
@@ -187,32 +187,37 @@ class _UploadState extends State<Upload> with SingleTickerProviderStateMixin {
                 ),
                 SizedBox(height: 20),
                 Container(
-                  height: 110,
-                  decoration: BoxDecoration(
-                    border: Border.all(width: 1, color: Colors.white),
-                  ),
-                  child: Wrap(
-                      direction: Axis.horizontal, // 나열 방향
-                      alignment: WrapAlignment.start, // 정렬 방식
-                      spacing: 2, // 좌우 간격
-                      runSpacing: 2, // 상하 간격
-                      children: checkBoxList.map((item) => Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(width: 1, color: Colors.white),
-                            borderRadius: BorderRadius.circular(15),
-                            color: buttonStates[item]! ? Colors.white24 : Colors.transparent,
-                          ),
-                          child: TextButton(
-                            onPressed: () {
-                              _toggleButtonState(item);
-                            },
-                            child: Text(item, style: TextStyle(color: Colors.white)),
-                          ),
+                    height: 110,
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 1, color: Colors.white),
+                    ),
+                    child: ListView(
+                      scrollDirection: Axis.vertical,
+                      children: [
+                        Wrap(
+                          direction: Axis.horizontal, // 나열 방향
+                          alignment: WrapAlignment.start, // 정렬 방식
+                          spacing: 2, // 좌우 간격
+                          runSpacing: 2, // 상하 간격
+                          children: checkBoxList.map((item) => Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(width: 1, color: Colors.white),
+                                borderRadius: BorderRadius.circular(15),
+                                color: buttonStates[item]! ? Colors.white24 : Colors.transparent,
+                              ),
+                              child: TextButton(
+                                onPressed: () {
+                                  _toggleButtonState(item);
+                                },
+                                child: Text(item, style: TextStyle(color: Colors.white)),
+                              ),
+                            ),
+                          )).toList(),
                         ),
-                      )).toList(),
-                  ),
+                      ],
+                    )
                 ),
                 SizedBox(height: 20),
                 Container(
@@ -221,7 +226,7 @@ class _UploadState extends State<Upload> with SingleTickerProviderStateMixin {
                     border: Border.all(width: 1, color: Colors.white),
                   ),
                   child: Center(
-                    child: Text('audio', style: TextStyle(color: Colors.white)),
+                    child: Icon(Icons.add,color: Colors.white,size: 35,),
                   ),
                 ),
                 SizedBox(height: 20),
@@ -243,9 +248,8 @@ class _UploadState extends State<Upload> with SingleTickerProviderStateMixin {
                           iconSize: 38,
                           splashRadius: 24,
                         ),
-                        SizedBox(width: 10),
                         Text(
-                          'Upload',
+                          '업로드',
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -264,3 +268,4 @@ class _UploadState extends State<Upload> with SingleTickerProviderStateMixin {
     );
   }
 }
+
