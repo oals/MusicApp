@@ -5,6 +5,7 @@ import 'package:flutterapp/music/Search.dart';
 import 'package:flutterapp/music/Home.dart';
 import 'package:flutterapp/music/Library.dart';
 import 'package:flutterapp/music/Feed.dart';
+import 'package:flutterapp/music/MusicPlay.dart';
 
 void main() {
   runApp(const MyApp());
@@ -38,6 +39,9 @@ class _MyHomePageState extends State<MyHomePage> {
     Library(),
     Home()
   ];
+
+
+
 
   void openDrawerCallback() {
     _scaffoldKey.currentState?.openDrawer();

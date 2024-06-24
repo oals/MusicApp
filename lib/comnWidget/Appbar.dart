@@ -4,6 +4,7 @@ import 'package:flutterapp/setting/setting.dart';
 import 'package:flutterapp/user/Login.dart';
 import 'package:flutterapp/comnWidget/Upload.dart';
 import 'package:flutterapp/music/MusicPlay.dart';
+import 'package:flutterapp/comnWidget/CustomBottomSheet.dart';
 
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -11,6 +12,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final VoidCallback openDrawerCallback;
   final String menuNM;
   const MyAppBar({super.key, required this.openDrawerCallback, required this.menuNM});
+
 
   void navigateTo(BuildContext context, String menuNm) {
     if (menuNm == '홈') {
@@ -59,8 +61,10 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           color: Colors.white,
           icon: Icon(Icons.upload),
           onPressed: () {
-            print('파일 업로드');
-            navigateTo(context, '업로드');
+            CustomBottomSheet(
+              context: context,
+              builder: (context) => Upload(),
+            );
           },
         ),
       ],
