@@ -74,6 +74,13 @@ class _MusicPlayState extends State<MusicPlay> {
 
   @override
   Widget build(BuildContext context) {
+    // Get the screen size
+    Size screenSize = MediaQuery.of(context).size;
+
+    // Calculate dynamic heights
+    double sliderHeight = screenSize.height * 0.3; // Example: 30% of screen height
+    double buttonContainerHeight = screenSize.height * 0.15; // Example: 15% of screen height
+
     return Scaffold(
       body: GestureDetector(
         onTap: () {
@@ -92,30 +99,35 @@ class _MusicPlayState extends State<MusicPlay> {
             Positioned(
               top: 20,
               right: 20,
-              child:  IconButton(onPressed: () => {
-                print('창 다시 내리기')
-              }, icon: Icon(Icons.keyboard_arrow_down, color: Colors.black,size: 40,)
+              child: IconButton(
+                onPressed: () => {
+                  print('창 다시 내리기')
+                },
+                icon: Icon(Icons.keyboard_arrow_down, color: Colors.black, size: 40,),
               ),
             ),
             Positioned(
               top: 30,
               left: 20,
-              child: Title( color: Colors.black, child: Text('공공구 - 회색도시',
-                style: TextStyle(
-                  fontSize: 25,
-                  // fontWeight: FontWeight.bold, // 폰트 굵기 설정 (예: bold)
-                  fontFamily: 'Nunito',
-                ),)) ,
+              child: Title(
+                color: Colors.black,
+                child: Text(
+                  '공공구 - 회색도시',
+                  style: TextStyle(
+                    fontSize: 25,
+                    fontFamily: 'Nunito',
+                  ),
+                ),
+              ),
             ),
-
-
             Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(height: 460),
+                  SizedBox(height: screenSize.height * 0.4), // Example: 10% of screen height
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 20),
+                    height: sliderHeight,
                     child: Slider(
                       value: _position.inSeconds.toDouble(),
                       min: 0.0,
@@ -125,27 +137,30 @@ class _MusicPlayState extends State<MusicPlay> {
                       },
                     ),
                   ),
-                  SizedBox(height: 200),
+                  SizedBox(height: screenSize.height * 0.15), // Example: 5% of screen height
                   Container(
+                    height: buttonContainerHeight,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        IconButton(onPressed: () => {
-                          print('123')
-                        },
-                            icon: Icon(Icons.favorite_border, color: Colors.black)
+                        IconButton(
+                          onPressed: () => {
+                            print('123')
+                          },
+                          icon: Icon(Icons.favorite_border, color: Colors.black),
                         ),
                         Icon(Icons.add),
-                        IconButton(onPressed: () => {
-                          print('123')
-                        },
-                            icon: Icon(Icons.list_sharp, color: Colors.black)
+                        IconButton(
+                          onPressed: () => {
+                            print('123')
+                          },
+                          icon: Icon(Icons.list_sharp, color: Colors.black),
                         ),
-
-                        IconButton(onPressed: () => {
-                          print('123')
-                        },
-                            icon: Icon(Icons.more_horiz_sharp, color: Colors.black)
+                        IconButton(
+                          onPressed: () => {
+                            print('123')
+                          },
+                          icon: Icon(Icons.more_horiz_sharp, color: Colors.black),
                         ),
                       ],
                     ),
@@ -158,4 +173,5 @@ class _MusicPlayState extends State<MusicPlay> {
       ),
     );
   }
+
 }

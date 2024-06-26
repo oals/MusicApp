@@ -106,7 +106,74 @@ class _SearchMusicState extends State<SearchMusic> {
                       },
                       child: Container(
                         width: MediaQuery.of(context).size.width,
-                        height: 100,
+                        height: 90,
+                        margin: EdgeInsets.all(0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.3,
+                              height: 80,
+                              color: Colors.black12,
+                              padding: EdgeInsets.all(2),
+                              child: Image.asset(
+                                'assets/flutterLogo.png',
+                                width: MediaQuery.of(context).size.width * 0.2,
+                                height: 80,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            SizedBox(width: 12),
+                            Expanded(
+                              child: Container(
+                                height: 80,
+                                color: Colors.black12,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      '공공구 - 회색도시',
+                                      style: TextStyle(fontSize: 14, color: Colors.white),
+                                    ),
+                                    Text(
+                                      'Admin',
+                                      style: TextStyle(fontSize: 10, color: Colors.white),
+                                    ),
+                                    Text(
+                                      '4:19',
+                                      style: TextStyle(fontSize: 10, color: Colors.white),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Container(
+                              width: 50,
+                              height: 80,
+                              color: Colors.black26,
+                              child: IconButton(
+                                onPressed: () {
+                                  // Handle the IconButton tap event separately
+                                  likeMusic(1);
+                                },
+                                icon: Icon(Icons.favorite, color: Colors.red),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        CustomBottomSheet(
+                          context: context,
+                          builder: (context) => MusicPlay(),
+                        );
+                      },
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 90,
                         margin: EdgeInsets.all(0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
