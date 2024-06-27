@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
-
 import '../comnWidget/CustomBottomSheet.dart';
 
 class MusicPlay extends StatefulWidget {
@@ -74,12 +73,10 @@ class _MusicPlayState extends State<MusicPlay> {
 
   @override
   Widget build(BuildContext context) {
-    // Get the screen size
-    Size screenSize = MediaQuery.of(context).size;
 
-    // Calculate dynamic heights
-    double sliderHeight = screenSize.height * 0.3; // Example: 30% of screen height
-    double buttonContainerHeight = screenSize.height * 0.15; // Example: 15% of screen height
+    Size screenSize = MediaQuery.of(context).size;
+    double sliderHeight = screenSize.height * 0.3;
+    double buttonContainerHeight = screenSize.height * 0.15;
 
     return Scaffold(
       body: GestureDetector(
@@ -111,13 +108,37 @@ class _MusicPlayState extends State<MusicPlay> {
               left: 20,
               child: Title(
                 color: Colors.black,
-                child: Text(
-                  '공공구 - 회색도시',
-                  style: TextStyle(
-                    fontSize: 25,
-                    fontFamily: 'Nunito',
-                  ),
-                ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        color: Colors.black87,
+                        padding: EdgeInsets.only(top: 2,bottom: 2,left: 5,right: 5),
+                        child: Text(
+                          '공공구 - 회색도시',
+                          style: TextStyle(
+                              fontSize: 25,
+                              fontFamily: 'Nunito',
+                              color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        color: Colors.black87,
+                        margin: EdgeInsets.only(top:6),
+                        padding: EdgeInsets.only(top: 2,bottom: 2,left: 5,right: 5),
+                        child: Text(
+                          'admin',
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontFamily: 'Nunito',
+                            color: Colors.white
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+
               ),
             ),
             Center(
