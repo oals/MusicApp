@@ -1,21 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutterapp/main.dart';
-
+import 'package:flutterapp/router/Router.dart';
+import 'package:flutterapp/comnWidget/MusicInfo.dart';
 
 class Library extends StatefulWidget {
-  const Library({super.key, required this.onBottomTap, required this.currentIndex});
-
-  final void Function(int index) onBottomTap; // onTap 함수 선언
-  final int currentIndex; // 현재 선택된 인덱스
+  const Library({super.key});
 
   @override
   State<Library> createState() => _LibraryState();
 }
 
 class _LibraryState extends State<Library> {
-
-
 
 
   @override
@@ -48,7 +44,7 @@ class _LibraryState extends State<Library> {
                         Container(
                           child: TextButton(
                             onPressed: () => {
-                              // onBottomTap(6)
+                              Navigator.pushNamed(context, '/musicList', arguments: {'userId': 1, 'opt': '1','title': 'Liked History'})
                             },
                             child : Text('liked History',style: TextStyle(color: Colors.white) )
                           ),
@@ -68,10 +64,11 @@ class _LibraryState extends State<Library> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
-                            margin: EdgeInsets.all(10), // 모든 방향에 10의 마진 추가
-                            child: Text(
-                              'playlist',
-                              style: TextStyle(color: Colors.white),
+                            child: TextButton(
+                                onPressed: () => {
+                                  Navigator.pushNamed(context, '/musicList', arguments: {'userId': 1, 'opt': '2','title': 'PlayList'})
+                                },
+                                child : Text('playList',style: TextStyle(color: Colors.white) )
                             ),
                           ),
                           Icon(Icons.navigate_next,color: Colors.white,)
@@ -176,40 +173,42 @@ class _LibraryState extends State<Library> {
                   child: CarouselSlider(
                     items: [
                       Container(
-                        width: 200,
+                        width: 130,
                         child: Image.asset('assets/common.jpeg',fit: BoxFit.fill
                           ,),
                       ),
                       Container(
-                        width: 200,
+                        width: 130,
                         child: Image.asset('assets/common.jpeg',fit: BoxFit.fill
                           ,),
                       ),
                       Container(
-                        width: 200,
+                        width: 130,
                         child: Image.asset('assets/common.jpeg',fit: BoxFit.fill
                           ,),
                       ),
                       Container(
-                        width: 200,
+                        width: 130,
                         child: Image.asset('assets/common.jpeg',fit: BoxFit.fill
                           ,),
                       ),
                     ],
                     options: CarouselOptions(
                       height: 130, // 높이 설정
-                      enlargeCenterPage: true, // 가운데 아이템 크게 표시
+                      enlargeCenterPage: false, // 가운데 아이템 크게 표시
                       autoPlay: false, // 자동 재생 설정
                       enableInfiniteScroll: false, // 무한 스크롤 설정
                       autoPlayInterval: Duration(seconds: 5), // 자동 재생 간격 설정
                       autoPlayAnimationDuration: Duration(milliseconds: 1500), // 자동 재생 애니메이션 지속 시간 설정
-                      viewportFraction: 0.5, // 화면에 표시될 아이템의 너비 비율 설정
+                        initialPage: 1,
+                      viewportFraction: 0.4, // 화면에 표시될 아이템의 너비 비율 설정
+                        pageSnapping : false
                     ),
                   )
               ),
             ),
-            SizedBox(height: 5),
-        Container(
+            SizedBox(height: 3),
+            Container(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -224,7 +223,8 @@ class _LibraryState extends State<Library> {
                 margin: EdgeInsets.only(left: 10,right: 10),
                 child: TextButton(
                   onPressed: () => {
-                    print('see all 뻐튼 이벤트')
+                    Navigator.pushNamed(context, '/musicList',
+                        arguments: {'userId': 1, 'opt': '3','title': 'Listening history'}),
                   },
                   child: Text( 'see all',style: TextStyle(color: Colors.white, fontSize: 12,fontWeight: FontWeight.w900))
                 ),
@@ -232,330 +232,64 @@ class _LibraryState extends State<Library> {
             ],
           ),
         ),
-
-
-        Container(
+            Container(
               margin: EdgeInsets.all(5),
               width: double.infinity,
-              decoration: BoxDecoration(
-                color: Colors.white,
-              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(
-                    width: double.infinity,
-                    color: Colors.black87,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.2, // Reduced width
-                          height: 50, // Reduced height
-                          color: Colors.black12,
-                          padding: EdgeInsets.all(2),
-                          child: Image.asset(
-                            'assets/flutterLogo.png',
-                            width: MediaQuery.of(context).size.width * 0.12, // Reduced width
-                            height: 50, // Reduced height
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        SizedBox(width: 8),
-                        Expanded(
-                          child: Container(
-                            height: 52, // Reduced height
-                            color: Colors.black12,
-                            margin: EdgeInsets.all(2),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  '공공구 - 회색도시',
-                                  style: TextStyle(fontSize: 10, color: Colors.white), // Further reduced fontSize
-                                ),
-                                Text(
-                                  'Admin',
-                                  style: TextStyle(fontSize: 8, color: Colors.white), // Further reduced fontSize
-                                ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      '4:19',
-                                      style: TextStyle(fontSize: 8, color: Colors.white), // Further reduced fontSize
-                                    ),
-                                    SizedBox(width: 5,),
-                                    Text(
-                                      'Now',
-                                      style: TextStyle(fontSize: 8, color: Colors.red), // Further reduced fontSize
-                                    ),
-                                  ],
-                                ),
-
-
-                              ],
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: 35, // Further reduced width
-                          height: 50, // Reduced height
-                          color: Colors.black26,
-                          child: IconButton(
-                            onPressed: () {
-                              // Handle the IconButton tap event separately
-                            },
-                            icon: Icon(Icons.favorite, color: Colors.red),
-                          ),
-                        ),
-                      ],
-                    ),
+                  musicInfo(
+                    context: context,
+                    imageWidth: 0.15,
+                    containerWidth: 0.25,
+                    containerHeight: 60.0,
+                    fontSize1: 12.0,
+                    fontSize2: 10.0,
                   ),
                   SizedBox(height: 0.1),
-                  Container(
-                    width: double.infinity,
-                    color: Colors.black87,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.2, // Reduced width
-                          height: 50, // Reduced height
-                          color: Colors.black12,
-                          padding: EdgeInsets.all(2),
-                          child: Image.asset(
-                            'assets/flutterLogo.png',
-                            width: MediaQuery.of(context).size.width * 0.12, // Reduced width
-                            height: 50, // Reduced height
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        SizedBox(width: 8),
-                        Expanded(
-                          child: Container(
-                            height: 52, // Reduced height
-                            color: Colors.black12,
-                            margin: EdgeInsets.all(2),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  '공공구 - 회색도시',
-                                  style: TextStyle(fontSize: 10, color: Colors.white), // Further reduced fontSize
-                                ),
-                                Text(
-                                  'Admin',
-                                  style: TextStyle(fontSize: 8, color: Colors.white), // Further reduced fontSize
-                                ),
-                                Text(
-                                  '4:19',
-                                  style: TextStyle(fontSize: 8, color: Colors.white), // Further reduced fontSize
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: 35, // Further reduced width
-                          height: 50, // Reduced height
-                          color: Colors.black26,
-                          child: IconButton(
-                            onPressed: () {
-                              // Handle the IconButton tap event separately
-                            },
-                            icon: Icon(Icons.favorite_border, color: Colors.white),
-                          ),
-                        ),
-                      ],
-                    ),
+                  musicInfo(
+                    context: context,
+                    imageWidth: 0.15,
+                    containerWidth: 0.25,
+                    containerHeight: 60.0,
+                    fontSize1: 12.0,
+                    fontSize2: 10.0,
                   ),
                   SizedBox(height: 0.1),
-                  Container(
-                    width: double.infinity,
-                    color: Colors.black87,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.2, // Reduced width
-                          height: 50, // Reduced height
-                          color: Colors.black12,
-                          padding: EdgeInsets.all(2),
-                          child: Image.asset(
-                            'assets/flutterLogo.png',
-                            width: MediaQuery.of(context).size.width * 0.12, // Reduced width
-                            height: 50, // Reduced height
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        SizedBox(width: 8),
-                        Expanded(
-                          child: Container(
-                            height: 52, // Reduced height
-                            color: Colors.black12,
-                            margin: EdgeInsets.all(2),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  '공공구 - 회색도시',
-                                  style: TextStyle(fontSize: 10, color: Colors.white), // Further reduced fontSize
-                                ),
-                                Text(
-                                  'Admin',
-                                  style: TextStyle(fontSize: 8, color: Colors.white), // Further reduced fontSize
-                                ),
-                                Text(
-                                  '4:19',
-                                  style: TextStyle(fontSize: 8, color: Colors.white), // Further reduced fontSize
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: 35, // Further reduced width
-                          height: 50, // Reduced height
-                          color: Colors.black26,
-                          child: IconButton(
-                            onPressed: () {
-                              // Handle the IconButton tap event separately
-                            },
-                            icon: Icon(Icons.favorite_border, color: Colors.white),
-                          ),
-                        ),
-                      ],
-                    ),
+                  musicInfo(
+                    context: context,
+                    imageWidth: 0.15,
+                    containerWidth: 0.25,
+                    containerHeight: 60.0,
+                    fontSize1: 12.0,
+                    fontSize2: 10.0,
                   ),
                   SizedBox(height: 0.1),
-                  Container(
-                    width: double.infinity,
-                    color: Colors.black87,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.2, // Reduced width
-                          height: 50, // Reduced height
-                          color: Colors.black12,
-                          padding: EdgeInsets.all(2),
-                          child: Image.asset(
-                            'assets/flutterLogo.png',
-                            width: MediaQuery.of(context).size.width * 0.12, // Reduced width
-                            height: 50, // Reduced height
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        SizedBox(width: 8),
-                        Expanded(
-                          child: Container(
-                            height: 52, // Reduced height
-                            color: Colors.black12,
-                            margin: EdgeInsets.all(2),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  '공공구 - 회색도시',
-                                  style: TextStyle(fontSize: 10, color: Colors.white), // Further reduced fontSize
-                                ),
-                                Text(
-                                  'Admin',
-                                  style: TextStyle(fontSize: 8, color: Colors.white), // Further reduced fontSize
-                                ),
-                                Text(
-                                  '4:19',
-                                  style: TextStyle(fontSize: 8, color: Colors.white), // Further reduced fontSize
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: 35, // Further reduced width
-                          height: 50, // Reduced height
-                          color: Colors.black26,
-                          child: IconButton(
-                            onPressed: () {
-                              // Handle the IconButton tap event separately
-                            },
-                            icon: Icon(Icons.favorite_border, color: Colors.white),
-                          ),
-                        ),
-                      ],
-                    ),
+                  musicInfo(
+                    context: context,
+                    imageWidth: 0.15,
+                    containerWidth: 0.25,
+                    containerHeight: 60.0,
+                    fontSize1: 12.0,
+                    fontSize2: 10.0,
                   ),
                   SizedBox(height: 0.1),
-                  Container(
-                    width: double.infinity,
-                    color: Colors.black87,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.2, // Reduced width
-                          height: 50, // Reduced height
-                          color: Colors.black12,
-                          padding: EdgeInsets.all(2),
-                          child: Image.asset(
-                            'assets/flutterLogo.png',
-                            width: MediaQuery.of(context).size.width * 0.12, // Reduced width
-                            height: 50, // Reduced height
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        SizedBox(width: 8),
-                        Expanded(
-                          child: Container(
-                            height: 52, // Reduced height
-                            color: Colors.black12,
-                            margin: EdgeInsets.all(2),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  '공공구 - 회색도시',
-                                  style: TextStyle(fontSize: 10, color: Colors.white), // Further reduced fontSize
-                                ),
-                                Text(
-                                  'Admin',
-                                  style: TextStyle(fontSize: 8, color: Colors.white), // Further reduced fontSize
-                                ),
-                                Text(
-                                  '4:19',
-                                  style: TextStyle(fontSize: 8, color: Colors.white), // Further reduced fontSize
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: 35, // Further reduced width
-                          height: 50, // Reduced height
-                          color: Colors.black26,
-                          child: IconButton(
-                            onPressed: () {
-                              // Handle the IconButton tap event separately
-                            },
-                            icon: Icon(Icons.favorite_border, color: Colors.white),
-                          ),
-                        ),
-                      ],
-                    ),
+                  musicInfo(
+                    context: context,
+                    imageWidth: 0.15,
+                    containerWidth: 0.25,
+                    containerHeight: 60.0,
+                    fontSize1: 12.0,
+                    fontSize2: 10.0,
                   ),
+                  SizedBox(height: 0.1),
                 ],
               ),
             ),
-
-
           ],
         ),
       ),
+
     );
   }
 }

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/comnWidget/Appbar.dart';
 import 'package:flutterapp/comnWidget/BottomNavigationBar.dart';
+import 'package:flutterapp/comnWidget/MusicInfo.dart';
+import 'package:flutterapp/music/MusicPlay.dart';
 import 'package:flutterapp/music/Search.dart';
 import 'package:flutterapp/music/Home.dart';
 import 'package:flutterapp/music/Library.dart';
 import 'package:flutterapp/music/Feed.dart';
 import 'package:flutterapp/music/MusicList.dart';
+import 'package:flutterapp/comnWidget/CustomBottomSheet.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,10 +17,16 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key});
 
+
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       home: MyHomePage(),
+      routes: {
+        '/musicList': (context) => MusicList(),
+      },
+
     );
   }
 }
@@ -39,7 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   String changeTitleNm(){
-    List<String> titleNmLIst = ['Home','Feed','Search','Library','Home',"Liked History"];
+    List<String> titleNmLIst = ['Home','Feed','Search','Library','Home'];
     return titleNmLIst[_currentIndex];
   }
 
@@ -51,16 +60,8 @@ class _MyHomePageState extends State<MyHomePage> {
       Home(),
       Feed(),
       SearchMusic(),
-      Library(
-        onBottomTap: (int index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        currentIndex: _currentIndex,
-      ),
+      Library(),
       Home(),
-      MusicList()
     ];
 
 
@@ -85,6 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       drawer: myAppBar.buildDrawer(context),
       bottomNavigationBar: myBottomNavigationBar,
+
     );
   }
 }

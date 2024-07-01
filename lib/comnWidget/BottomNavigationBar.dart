@@ -17,6 +17,7 @@ class MyBottomNavigationBar extends StatelessWidget {
             top: BorderSide(width: 0.2,color: Colors.white)
           )
         ),
+        padding: EdgeInsets.only(top: 3),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[

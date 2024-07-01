@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/comnWidget/CustomBottomSheet.dart';
 import 'package:flutterapp/music/MusicPlay.dart';
+import 'package:flutterapp/comnWidget/MusicInfo.dart';
 
 class SearchMusic extends StatefulWidget {
   const SearchMusic({Key? key}) : super(key: key);
@@ -94,149 +95,30 @@ class _SearchMusicState extends State<SearchMusic> {
                 child: Column(
                   children: [
                     SingleChildScrollView(
-                    physics: AlwaysScrollableScrollPhysics(),
-                child: Column(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        CustomBottomSheet(
-                          context: context,
-                          builder: (context) => MusicPlay(),
-                        );
-                      },
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 90,
-                        margin: EdgeInsets.all(0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Container(
-                              width: MediaQuery.of(context).size.width * 0.3,
-                              height: 80,
-                              color: Colors.black12,
-                              padding: EdgeInsets.all(2),
-                              child: Image.asset(
-                                'assets/flutterLogo.png',
-                                width: MediaQuery.of(context).size.width * 0.2,
-                                height: 80,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            SizedBox(width: 12),
-                            Expanded(
-                              child: Container(
-                                height: 80,
-                                color: Colors.black12,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      '공공구 - 회색도시',
-                                      style: TextStyle(fontSize: 14, color: Colors.white),
-                                    ),
-                                    Text(
-                                      'Admin',
-                                      style: TextStyle(fontSize: 10, color: Colors.white),
-                                    ),
-                                    Text(
-                                      '4:19',
-                                      style: TextStyle(fontSize: 10, color: Colors.white),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Container(
-                              width: 50,
-                              height: 80,
-                              color: Colors.black26,
-                              child: IconButton(
-                                onPressed: () {
-                                  // Handle the IconButton tap event separately
-                                  likeMusic(1);
-                                },
-                                icon: Icon(Icons.favorite, color: Colors.red),
-                              ),
-                            ),
-                          ],
-                        ),
+                      physics: AlwaysScrollableScrollPhysics(),
+                      child: Column(
+                        children: [
+                          musicInfo(
+                            context: context,
+                            imageWidth: 0.40,
+                            containerWidth: 0.30,
+                            containerHeight: 70.0,
+                            fontSize1: 12.0,
+                            fontSize2: 10.0,
+                          ),
+                          musicInfo(
+                            context: context,
+                            imageWidth: 0.40,
+                            containerWidth: 0.30,
+                            containerHeight: 70.0,
+                            fontSize1: 12.0,
+                            fontSize2: 10.0,
+                          ),
+                        ],
                       ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        CustomBottomSheet(
-                          context: context,
-                          builder: (context) => MusicPlay(),
-                        );
-                      },
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 90,
-                        margin: EdgeInsets.all(0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Container(
-                              width: MediaQuery.of(context).size.width * 0.3,
-                              height: 80,
-                              color: Colors.black12,
-                              padding: EdgeInsets.all(2),
-                              child: Image.asset(
-                                'assets/flutterLogo.png',
-                                width: MediaQuery.of(context).size.width * 0.2,
-                                height: 80,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            SizedBox(width: 12),
-                            Expanded(
-                              child: Container(
-                                height: 80,
-                                color: Colors.black12,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      '공공구 - 회색도시',
-                                      style: TextStyle(fontSize: 14, color: Colors.white),
-                                    ),
-                                    Text(
-                                      'Admin',
-                                      style: TextStyle(fontSize: 10, color: Colors.white),
-                                    ),
-                                    Text(
-                                      '4:19',
-                                      style: TextStyle(fontSize: 10, color: Colors.white),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Container(
-                              width: 50,
-                              height: 80,
-                              color: Colors.black26,
-                              child: IconButton(
-                                onPressed: () {
-                                  // Handle the IconButton tap event separately
-                                  likeMusic(1);
-                                },
-                                icon: Icon(Icons.favorite_border, color: Colors.white),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                    )
+
                   ],
-                ),
-              )
-
-
-          ],
                 ),
               ),
             ],

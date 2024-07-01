@@ -98,7 +98,7 @@ class _MusicPlayState extends State<MusicPlay> {
               right: 20,
               child: IconButton(
                 onPressed: () => {
-                  print('창 다시 내리기')
+                  Navigator.pop(context)
                 },
                 icon: Icon(Icons.keyboard_arrow_down, color: Colors.black, size: 40,),
               ),
@@ -107,7 +107,7 @@ class _MusicPlayState extends State<MusicPlay> {
               top: 30,
               left: 20,
               child: Title(
-                color: Colors.black,
+                  color: Colors.black,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -117,9 +117,9 @@ class _MusicPlayState extends State<MusicPlay> {
                         child: Text(
                           '공공구 - 회색도시',
                           style: TextStyle(
-                              fontSize: 25,
-                              fontFamily: 'Nunito',
-                              color: Colors.white,
+                            fontSize: 25,
+                            fontFamily: 'Nunito',
+                            color: Colors.white,
                           ),
                         ),
                       ),
@@ -130,9 +130,9 @@ class _MusicPlayState extends State<MusicPlay> {
                         child: Text(
                           'admin',
                           style: TextStyle(
-                            fontSize: 15,
-                            fontFamily: 'Nunito',
-                            color: Colors.white
+                              fontSize: 15,
+                              fontFamily: 'Nunito',
+                              color: Colors.white
                           ),
                         ),
                       ),
@@ -163,14 +163,28 @@ class _MusicPlayState extends State<MusicPlay> {
                     height: buttonContainerHeight,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Container(
+                          child: Column(
+                            children: [
+                              IconButton(
+                                onPressed: () => {
+                                  print('123')
+                                },
+                                icon: Icon(Icons.favorite_border, color: Colors.black),
+                              ),
+                              Text('10')
+                            ],
+                          ),
+                        ),
+
                         IconButton(
                           onPressed: () => {
                             print('123')
                           },
-                          icon: Icon(Icons.favorite_border, color: Colors.black),
+                          icon: Icon(Icons.add, color: Colors.black),
                         ),
-                        Icon(Icons.add),
                         IconButton(
                           onPressed: () => {
                             print('123')
@@ -193,6 +207,8 @@ class _MusicPlayState extends State<MusicPlay> {
         ),
       ),
     );
+
+
   }
 
 }
